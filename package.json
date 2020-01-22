@@ -1,0 +1,17 @@
+{
+  "name": "web-rastreamento-correios",
+  "version": "1.0.0",
+  "description": "SPA para rastrear objetos dos correios",
+  "main": "app.js",
+  "repository": "https://github.com/JesterIruka/web-rastreamento-correios.git",
+  "author": "João Bondim <jesteriruka@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "rastrojs": "^1.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

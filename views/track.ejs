@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            * {
+                font-family: 'Montserrat', sans-serif;
+            }
+            .step {
+                box-shadow: 1px 1px 1px 1px black;
+                font-size: 18px;
+            }
+            @media(max-width: 568px) {
+                .step {
+                    font-size: 14px;
+                }
+            }
+        </style>
+    </head>
+    <body class="bg-dark">
+        <div class="container bg-secondary" style="min-height: 100vh">
+            <div class="mb-5">
+                <h1 class="text-center">Rastreamento de objetos</h1>
+            </div>
+            <form action="/" method="get">
+                <div class="row">
+                    <div class="col-lg-6 mx-auto">
+                        <small>Digite o rastreamento no campo abaixo para obter informações sobre o objeto</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 input-group mx-auto">
+                        <input name="codigo" placeholder="PX000000000BR" class="form-control" value="<%=codigo%>">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-dark">Rastrear</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <% if (track != null && typeof(track) === 'object') { %>
+                <% track.tracks.reverse().forEach(function(step) { %>
+                <div class="row my-2">
+                    <div class="border border-dark col-lg-6 mx-auto step">
+                        <div class="col-12 text-center mx-auto">
+                            <p><%= step.status.capitalize() %></p>
+                            <% if (step.observation != null) { %>
+                            <p class="js-format"><%=step.observation.capitalize()%></p>
+                            <% } %>
+                            <p>Local: <strong><%= step.locale.toUpperCase() %></strong></p>
+                            <p>Evento ocorrido em <%= brdate(step.trackedAt) %></p>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            <% } else if (track === false) { %>
+                <div class="row mt-2">
+                    <div class="col-lg-6 mx-auto">
+                        <div class="alert alert-danger">
+                            Rastreamento inválido, confira seus dados e tente novamente.
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </body>
+    <footer>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script>
+            let toFormat = document.querySelectorAll('.js-format');
+            toFormat.forEach((e) => {
+                text = e.innerHTML;
+
+                if (!text.includes("tratamento") && !text.includes("distribuição")) return;
+                
+                origem = text.indexOf('em ');
+                origemF = text.indexOf(' para')-3;
+                origem = text.substr(origem+3, origemF-origem);
+
+                destino = text.lastIndexOf('em ');
+                destino = text.substr(destino+3);
+
+                e.innerHTML = "De <strong>"+origem.toUpperCase()+"</strong> Para <strong>"+destino.toUpperCase()+"</strong>";
+            })
+        </script>
+    </footer>
+</html>
