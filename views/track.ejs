@@ -19,8 +19,8 @@
             }
         </style>
     </head>
-    <body class="bg-dark">
-        <div class="container bg-secondary" style="min-height: 100vh">
+    <body>
+        <div class="container" style="min-height: 100vh">
             <div class="mb-5">
                 <h1 class="text-center">Rastreamento de objetos</h1>
             </div>
@@ -34,7 +34,7 @@
                     <div class="col-lg-6 input-group mx-auto">
                         <input name="codigo" placeholder="PX000000000BR" class="form-control" value="<%=codigo%>">
                         <div class="input-group-append">
-                            <button type="submit" class="btn btn-dark">Rastrear</button>
+                            <button type="submit" class="btn btn-primary">Rastrear</button>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             <% if (track != null && typeof(track) === 'object') { %>
                 <% track.tracks.reverse().forEach(function(step) { %>
                 <div class="row my-2">
-                    <div class="border border-dark col-lg-6 mx-auto step">
+                    <div class="border col-lg-6 mx-auto shadow">
                         <div class="col-12 text-center mx-auto">
                             <p><%= step.status.capitalize() %></p>
                             <% if (step.observation != null) { %>
